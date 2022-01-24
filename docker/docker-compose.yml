@@ -28,7 +28,7 @@ services:
     image: nginx
     depends_on:
       - backend
-      # - frontend
+      - frontend
     volumes:
       - ../nginx/templates:/etc/nginx/templates
     ports:

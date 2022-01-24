@@ -1,4 +1,4 @@
-import { JobType, Location } from "@javnikonkursi/shared";
+import { SelectOption } from "react-select-material-ui";
 
 export enum EFiltersActionTypes {
   SET_FILTERS = "@@filters/SET_FILTERS",
@@ -7,8 +7,8 @@ export enum EFiltersActionTypes {
 }
 
 export interface IFiltersState {
-  locations: Location[];
-  jobTypes: JobType[];
-  companies: string[];
+  regions: SelectOption[];
+  jobTypes: SelectOption[];
+  companies: SelectOption[];
   shouldIncludeExpired: boolean;
 }

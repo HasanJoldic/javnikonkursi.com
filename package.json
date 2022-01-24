@@ -7,7 +7,16 @@
       "services/*"
     ]
   },
+  "scripts": {
+    "clean": "yarn workspaces run clean",
+    "build:dev": "docker-compose -f docker/docker-compose.yml -f docker/development.yml build",
+    "start:dev": "docker-compose -f docker/docker-compose.yml -f docker/development.yml up",
+    "build": "docker-compose -f docker/docker-compose.yml -f docker/development.yml build",
+    "start": "docker-compose -f docker/docker-compose.yml -f docker/development.yml up",
+    "download-graphql-schema": "get-graphql-schema http://localhost:3000/graphql > __generated__/schema.graphql"
+  },
   "devDependencies": {
+    "get-graphql-schema": "^2.1.2",
     "typescript": "^4.5.4"
   }
 }

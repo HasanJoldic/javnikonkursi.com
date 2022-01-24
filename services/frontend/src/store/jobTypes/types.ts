@@ -1,4 +1,4 @@
-import { JobType } from "@javnikonkursi/shared";
+import { GetJobTypesQuery } from "generated/types";
 
 export enum EJobTypesActionType {
   SET_JOB_TYPES = "@@job-types/SET_JOB_TYPES",
@@ -6,5 +6,5 @@ export enum EJobTypesActionType {
 }
 
 export interface IJobTypesState {
-  data: JobType[];
+  data: GetJobTypesQuery["jobTypes"]["nodes"];
 }

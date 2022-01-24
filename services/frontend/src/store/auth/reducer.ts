@@ -1,7 +1,7 @@
 import { Reducer } from "redux";
 
 import { EAuthActionTypes, IAuthState } from "./types";
-import { loginSuccess, registerSuccess } from "./actions";
+import { loginSuccess } from "./actions";
 
 const INITIAL_STATE: IAuthState = {
   isLoading: null,
@@ -10,10 +10,7 @@ const INITIAL_STATE: IAuthState = {
   user: null,
 };
 
-const reducer: Reducer<IAuthState> = (
-  state = INITIAL_STATE,
-  action
-): IAuthState => {
+const reducer: Reducer<IAuthState> = (state = INITIAL_STATE, action): IAuthState => {
   switch (action.type) {
     case EAuthActionTypes.LOGIN_REQUEST: {
       return { ...INITIAL_STATE, isLoading: true };
@@ -30,11 +27,6 @@ const reducer: Reducer<IAuthState> = (
 
     case EAuthActionTypes.LOGOUT: {
       return INITIAL_STATE;
-    }
-
-    case EAuthActionTypes.REGISTER_SUCCESS: {
-      const { payload } = action as ReturnType<typeof registerSuccess>;
-      return { ...INITIAL_STATE, ...payload };
     }
 
     default:

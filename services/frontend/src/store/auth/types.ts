@@ -5,8 +5,6 @@ export enum EAuthActionTypes {
   LOGIN_SUCCESS = "@@auth/LOGIN_SUCCESS",
   LOGIN_FAILURE = "@@auth/LOGIN_FAILURE",
   LOGOUT = "@@auth/LOGOUT",
-
-  REGISTER_SUCCESS = "@@auth/REGISTER_SUCCESS",
 }
 
 export interface IAuthState {

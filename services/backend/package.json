@@ -2,16 +2,18 @@
   "name": "@javnikonkursi/backend",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/app/index.js",
-  "typings": "dist/app/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rimraf dist",
-    "build": "yarn clean && tsc --build",
-    "start": "node dist/app/index.js",
-    "pm2:start": "NODE_ENV=production pm2 start dist/app/index.js --name konkursi-backend --log pm2.log",
+    "clean": "rm -rf dist",
+    "build": "yarn clean && tsc --build && tsc-alias",
+    "build:watch": "yarn clean && tsc --build --watch",
+    "start": "node dist/index.js",
+    "start:watch": "nodemon dist/index.js",
+    "pm2:start": "NODE_ENV=production pm2 start dist/index.js --name konkursi-backend --log pm2.log",
     "pm2:restart": "NODE_ENV=production pm2 restart konkursi-backend --log pm2.log",
-    "migrate:latest": "knex --cwd=./dist/db/migrations --knexfile=../knexfile.js migrate:latest"
+    "db:migrate": "node ./db/migrate.js",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "repository": {
     "type": "git",
@@ -25,6 +27,8 @@
   },
   "homepage": "https://github.com/HasanJoldic/career-backend#readme",
   "dependencies": {
+    "@graphile-contrib/pg-many-to-many": "^1.0.1",
+    "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
     "@javnikonkursi/shared": "1.0.0",
     "aws-sdk": "^2.1015.0",
     "bcrypt": "^5.0.0",
@@ -32,32 +36,33 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.13.0",
+    "graphile-build": "^4.12.2",
     "http-status-codes": "^2.1.4",
     "jsonwebtoken": "^8.5.1",
-    "mkdirp": "^1.0.4",
     "multer": "^1.4.3",
-    "npm-watch": "^0.11.0",
-    "path": "^0.12.7",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "postgraphile": "^4.12.8",
+    "postgraphile-plugin-connection-filter": "^2.2.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-typescript": "^7.10.1",
+    "@graphql-codegen/cli": "^2.3.1",
+    "@graphql-codegen/typescript": "^2.4.2",
+    "@graphql-codegen/typescript-operations": "^2.2.2",
     "@types/bcrypt": "^3.0.0",
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.5",
-    "@types/cors": "^2.8.12",
-    "@types/multiparty": "0.0.32",
     "@types/multer": "^1.4.7",
     "@types/node": "^14.0.13",
     "@types/pg": "^8.6.1",
     "core-js": "^3.19.0",
     "nodemon": "^2.0.14",
-    "npm-run-all": "^4.1.5",
+    "postgres-migrations": "^5.3.0",
     "regenerator-runtime": "^0.13.9",
-    "rimraf": "^3.0.2",
-    "postgres-migrations": "^5.3.0"
+    "tsc-alias": "^1.5.0"
   }
 }

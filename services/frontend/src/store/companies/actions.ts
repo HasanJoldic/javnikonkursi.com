@@ -1,14 +1,12 @@
 import { useEffect } from "react";
-import { Dispatch } from "redux";
 import { useDispatch } from "react-redux";
+import { gql, useQuery } from "@apollo/client";
 
-import { Company, TAnyVoidFunction } from "@javnikonkursi/shared";
-import {
-  createCompanyBodyType,
-  updateCompanyBodyType,
-} from "@javnikonkursi/shared";
+import { ArrayElement } from "@javnikonkursi/shared";
 
-import { TApiClient, useApiClient } from "api";
+import { GetCompaniesQuery, GetCompaniesQueryVariables } from "generated/types";
+
+import { useApiClient } from "api";
 
 import { ICompaniesState, ECompaniesActionType } from "./types";
 
@@ -17,70 +15,38 @@ export const setCompanies = (data: ICompaniesState["data"]) => ({
   payload: { data },
 });
 
-export const setCompany = (id: string, company: Company) => ({
+export const setCompany = (id: string, company: ArrayElement<ICompaniesState["data"]>) => ({
   type: ECompaniesActionType.SET_COMPANY,
   payload: { id, company },
 });
 
-export const getCompanies = (apiClient: TApiClient) => {
-  return async (dispatch: Dispatch) => {
-    const companies = await apiClient.get<Company>({ key: "companies" });
-    dispatch(setCompanies(companies));
-  };
-};
+const GET_COMPANIES = gql`
+  query GetCompanies {
+    companies {
+      nodes {
+        id
+        url
+        title
+        region {
+          id
+          title
+        }
+        _createdAt
+        _updatedAt
+      }
+    }
+  }
+`;
 
 export const useGetCompanies = () => {
   const dispatch = useDispatch();
   const apiClient = useApiClient();
+  const query = useQuery<GetCompaniesQuery, GetCompaniesQueryVariables>(GET_COMPANIES);
+  const companies = query?.data?.companies?.nodes;
 
   useEffect(() => {
-    dispatch(getCompanies(apiClient));
-  }, [dispatch, apiClient]);
-};
+    dispatch(setCompanies(companies));
+  }, [dispatch, apiClient, companies]);
 
-export const createCompany = (
-  apiClient: TApiClient,
-  input: createCompanyBodyType,
-  cb?: TAnyVoidFunction
-) => {
-  return async (dispatch: Dispatch<any>) => {
-    const company = await apiClient.create<Company, createCompanyBodyType>({
-      key: "companies",
-      input,
-    });
-    dispatch(getCompanies(apiClient));
-    if (cb) cb();
-  };
-};
-
-export const updateCompany = (
-  apiClient: TApiClient,
-  id: string,
-  input: updateCompanyBodyType,
-  cb?: TAnyVoidFunction
-) => {
-  return async (dispatch: Dispatch<any>) => {
-    const company = await apiClient.update<Company, updateCompanyBodyType>({
-      key: "companies",
-      id,
-      input,
-    });
-    dispatch(getCompanies(apiClient));
-    if (cb) cb();
-  };
-};
-
-export const deleteCompany = (
-  apiClient: TApiClient,
-  id: string,
-  cb?: TAnyVoidFunction
-) => {
-  return async (dispatch: Dispatch<any>) => {
-    const isDeleted = await apiClient.delete({
-      key: "companies",
-      id,
-    });
-    dispatch(getCompanies(apiClient));
-    if (cb) cb();
-  };
+  return query;
 };

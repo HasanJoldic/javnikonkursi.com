@@ -1,7 +1,10 @@
 import moment from "moment";
 
 export enum EDateFormat {
-  "DD.MM.yyyy" = "DD.MM.yyyy",
+  // 27.10.2020
+  "DD.MM.YYYY" = "DD.MM.YYYY",
+  // 27.10.2020 16:21:23
+  "DD.MM.YYYY HH:mm:ss" = "DD.MM.YYYY HH:mm:ss",
 }
 
 export const momentFormat = (date: string, format: EDateFormat) => {

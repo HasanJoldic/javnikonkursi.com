@@ -1,11 +1,13 @@
 {
   "references": [{ "path": "../../packages/shared" }],
   "compilerOptions": {
+    "baseUrl": "src",
     "rootDir": "src",
     "outDir": "dist",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "lib": ["ESNext"]
+    "lib": ["ESNext"],
+    "moduleResolution": "node"
   },
   "include": ["src"]
   // "compilerOptions": {

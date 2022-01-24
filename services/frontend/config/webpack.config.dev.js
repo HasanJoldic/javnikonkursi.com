@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const SpriteLoaderPlugin = require("svg-sprite-loader/plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = function (options) {
   return {
@@ -157,12 +158,9 @@ module.exports = function (options) {
         template: "./public/index.html",
         inject: true,
       }),
-      new webpack.DefinePlugin({
-        ENV: JSON.stringify("development"),
-        LOCAL: false,
-      }),
       new CleanWebpackPlugin(),
       new SpriteLoaderPlugin(),
+      new Dotenv(),
     ],
     optimization: {
       splitChunks: {

@@ -120,3 +120,8 @@ env
 lib/**/*
 
 tsconfig.tsbuildinfo
+
+schema.graphql
+generated/types.ts
+
+ansible

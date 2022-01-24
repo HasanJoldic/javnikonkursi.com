@@ -13,7 +13,7 @@ server {
     proxy_set_header X-Forwarded-Proto https;
 
     proxy_set_header Host backend;
-    proxy_pass http://backend:${BACKEND_PORT};
+    proxy_pass http://backend:3000;
 
     break;
   }
@@ -24,7 +24,7 @@ server {
     proxy_set_header X-Forwarded-Proto https;
 
     proxy_set_header Host frontend;
-    proxy_pass http://frontend:${FRONTEND_PORT};
+    proxy_pass http://frontend:8080;
 
     break;
   }
